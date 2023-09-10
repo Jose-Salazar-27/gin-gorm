@@ -2,16 +2,18 @@ package main
 
 import (
 	"github.com/bricsport/lib/database"
-	"github.com/bricsport/router"
+	"github.com/bricsport/server"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	db := database.Connect()
-	database.Migrate(db)
+	// database.Migrate(db)
 
 	app := gin.Default()
-	router.LoadUserRoutes(app)
+
+	server := server.NewServer(app, db)
+	server.Init()
 
 	app.Run(":9000")
 }
